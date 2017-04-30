@@ -1,0 +1,106 @@
+
+Problem statement
+
+Balanced parenthesis is recursively defined as:
+
+1. Empty string is defined as balanced.
+
+2. If S is balanced, then so is '(' + S + ')', where + denotes concatenation.
+
+3. If S1 and S2 are balanced then so, S1+S2, where + denotes concatenation.
+
+
+
+You are given a sequence S of length N of characters '(' and ')'. You have to delete exactly one character from S, such that after the deletion S is a balanced parenthesis sequence. You have to tell if it is possible or not to do so.
+
+
+
+Input
+
+First line contains T, the number of test cases. 
+
+Each test case consists of string S in one line.
+
+
+
+Output
+
+For each test case, output "YES"(quotes for clarity) if we can delete exactly one character to make S balanced parenthesis sequence, else output "NO"(quotes for clarity).
+
+
+
+Constraints
+
+1 ≤ T ≤ 10
+
+
+
+Subtasks
+
+1. 2 ≤ N ≤ 1000 (50% score)
+
+2. 2 ≤ N ≤ 100000 (50%score)
+
+
+
+Explanation
+
+For first sample test case, we can remove third character to get a balanced parenthesis.
+
+While in second sample test case, deleting any character will lead to an unbalanced parenthesis.
+
+
+Sample testcases
+
+Input
+
+2 
+()) 
+()
+
+Output
+
+YES 
+NO
+
+/* package whatever; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Stockroom
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		// your code goes here
+		Scanner sc = new Scanner(System.in);
+		//List<String> intput = new AarrayList<>();
+		int N = Integer.parseInt(sc.nextLine());
+		for (int i = 0 ; i < N ; i ++) {
+		    System.out.println(evaluate(sc.nextLine()));
+		}
+	}
+	
+	public static String evaluate(String str) {
+	    char[] ca = str.toCharArray();
+	    int l = 0;
+	    int r = 0;
+	    for (int i = 0 ; i < ca.length ; i ++) {
+	        if (ca[i] == '(') {
+	            //System.out.println(i);
+		        l++;
+	        }
+	        if (ca[i] == ')') {
+	            //System.out.println(i);
+		        r++;
+	        }
+		    
+		}
+		if (l - r == 1 || l - r == -1) {
+		    return "YES";
+		}
+	    return "NO";
+	}
+}
