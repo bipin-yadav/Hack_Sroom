@@ -104,3 +104,79 @@ class Stockroom
 	    return "NO";
 	}
 }
+
+
+#include<stdio.h>
+#include<conio.h>
+#include<iostream.h>
+
+/*
+Find minimum number of edits to balance parentheses.
+http://stackoverflow.com/questions/29687542/find-the-minimum-number-of-edits-to-balance-parentheses
+
+My approach:
+            * find final string having left over open and close brackets which couldn't make pair. 
+            Remember that in this final string, close brackets will be present 1st and then open brackets.
+            * Now we will have to edit open brackets and close brackets separately.
+            * eg: for close brackets: 
+                (1) if it is of even length:
+                    min edit to balance will be to change half close brackets to open brackets. So minEdit = closeBracketCount/2
+                (2) If it is of odd length:
+                    min edit to balance will be to do above step 1 and remove the remaining 1 bracket. so minEdit = closeBracketCount/2 + 1
+
+            * eg: for open brackets: 
+                (1) if it is of even length:
+                    min edit to balance will be to change half open brackets to close brackets. So minEdit = openBracketCount/2
+                (2) If it is of odd length:
+                    min edit to balance will be to do above step 1 and remove the remaining 1 bracket. so minEdit = openBracketCount/2 + 1
+
+
+*/
+
+int findMinBalancedParentheses(char* input) {
+    int minEdit = 0;
+    int n = strlen(input);
+    char stack[n];
+    int stackTopPos = -1;
+    int openBracketCount = 0;
+    int closeBracketCount = 0;
+    
+    for (int i=0; i<n; i++) {
+        if (input[i] == ')') {
+            if (stackTopPos == -1) {
+                stack[++stackTopPos] = ')';
+                closeBracketCount++;
+            } else if (stack[stackTopPos] == '(') {
+                stackTopPos--
+                openBracketCount--;
+            } else {
+                stack[++stackTopPos] = ')';
+                closeBracketCount++;
+            }
+        } else {
+            stack[++stackTopPos] = '(';
+            openBracketCount++;
+        }
+    }
+    
+    stack[++stackTopPos] = '\0';
+    
+    // change half brackets to close brackets and remove rest (i.e remaining 1 or 0 open brackets).
+    // eg: for ((( open brackets, your output should be (). i.e change the half open to close and remove the odd remaining bracket.
+    int minEditForOpenBrackets = openBracketCount/2 + openBracketCount%2; 
+    int minEditForCloseBrackets = closeBracketCount/2 + closeBracketCount%2;
+    
+    minEdit = minEditForOpenBrackets + minEditForCloseBrackets;
+    
+    return minEdit;
+}
+
+int main() {
+    char *input = ")()(()())))()((())((";
+    int minBalanceParentheses = findMinBalancedParentheses(input);
+    
+    printf("Minimum edit required: %d", minBalanceParentheses);
+    
+    getch();
+}
+
